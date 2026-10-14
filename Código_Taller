@@ -1,0 +1,64 @@
+matriz = []
+total_carros = 0
+
+opcion = "0"
+while opcion != "5":
+    print("\n--- MENÚ DEL TALLER ---")
+    print("1. Registrar ingreso de carro")
+    print("2. Registrar salida del carro")
+    print("3. Reporte de carros terminados")
+    print("4. Reporte de todos los carros ingresados")
+    print("5. Salir")
+    
+    opcion = input("Elija una opción (1-5): ")
+
+    if opcion == "1":
+        if total_carros >= 30:
+            print("Taller lleno. No caben más de 30 vehículos.")
+        else:
+            placa = input("Placa: ")
+            nombre = input("Nombre dueño: ")
+            celular = input("Celular: ")
+            dia_ingreso = int(input("Día de ingreso (1-31): "))
+            
+            nuevo_carro = [placa, nombre, celular, dia_ingreso, 0, 0]
+            matriz.append(nuevo_carro)
+            total_carros = total_carros + 1
+            print("Carro registrado con éxito.")
+
+    elif opcion == "2":
+        placa_buscar = input("Ingrese la placa del carro que sale: ")
+        encontrado = False
+        
+        for carro in matriz:
+            if carro[0] == placa_buscar and carro[4] == 0:
+                dia_salida = int(input("Ingrese el día de salida (1-31): "))
+                demora = dia_salida - carro[3]
+                
+                carro[4] = dia_salida
+                carro[5] = demora
+                
+                print("Salida de carro lista, los días que demoró fueron:", demora)
+                encontrado = True
+                break
+                
+        if encontrado == False:
+            print("El carro no se encontró o ya había salido.")
+
+    elif opcion == "3":
+        print("\n--- CARROS TERMINADOS (REPARADOS) ---")
+        for carro in matriz:
+
+            if carro[4] > 0:
+                print("Placa:", carro[0], "- Días demorados:", carro[5])
+
+    elif opcion == "4":
+        print("\n--- TODOS LOS CARROS DEL MES ---")
+        for carro in matriz:
+            print("Placa:", carro[0], "- Dueño:", carro[1], "- Celular:", carro[2])
+
+    elif opcion == "5":
+        print("Hasta pronto")
+        
+    else:
+        print("Seleccione una opción válida")
